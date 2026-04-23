@@ -1,5 +1,7 @@
 package br.com.markFilmes.model;
 
+import br.com.markFilmes.service.ConsultaChatGPT;
+import br.com.markFilmes.service.traducao.ConsultaMyMemory;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import jdk.jfr.Category;
 
@@ -22,7 +24,7 @@ public class Serie {
         this.genero = Categoria.fromString(dadosSerie.genero().split(",")[0].trim());
         this.atores = dadosSerie.atores();
         this.poster = dadosSerie.poster();
-        this.sinopse = dadosSerie.sinopse();
+        this.sinopse = ConsultaMyMemory.obterTraducao(dadosSerie.sinopse()).trim(); //Caso for usar a API do Chat GPT basta alterar o ConsultaMyMemory para ConsultaChatGPT
     }
 
     public String getTitulo() {
