@@ -25,6 +25,8 @@ public class Filme {
     private String poster;
     private String sinopse;
 
+    public Filme(){}
+
     public Filme(DadosFilme dadosFilme){
         this.titulo = dadosFilme.titulo();
         this.anoLancamento = dadosFilme.anoLancamento();

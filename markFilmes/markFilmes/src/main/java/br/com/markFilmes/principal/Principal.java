@@ -7,6 +7,7 @@ import br.com.markFilmes.service.ConsumoApi;
 import br.com.markFilmes.service.ConverteDados;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Principal {
 
@@ -19,6 +20,8 @@ public class Principal {
 
     private SerieRepository repositorioSerie;
     private FilmeRepository repositorioFilme;
+
+    private List<Serie> series = new ArrayList<>();
 
     public Principal(SerieRepository repositorioSerie, FilmeRepository repositorioFilme) {
         this.repositorioSerie = repositorioSerie;
@@ -75,8 +78,7 @@ public class Principal {
 
     private void buscarSerieWeb() {
         DadosSerie dados = getDadosSerie();
-        Serie serie = new Serie (dados);
-        //dadosSeries.add(dados);
+        Serie serie = new Serie(dados);
         repositorioSerie.save(serie);
         System.out.println(dados);
 
@@ -100,34 +102,51 @@ public class Principal {
     // ========================= EPISÓDIOS =========================
 
     private void buscarEpisodioPorSerie() {
-        DadosSerie dadosSerie = getDadosSerie();
+        listarSeriesBuscadas();
+        System.out.println("Escolha a série que deseja buscar os episódios: ");
+        var nomeSerie = leitura.nextLine();
 
-        if (dadosSerie.totalTemporadas() == null) {
-            System.out.println("Não foi possível obter temporadas.");
-            return;
+        Optional<Serie> serie = series.stream()
+                .filter(s -> s.getTitulo().toLowerCase().contains(nomeSerie.toLowerCase()))
+                .findFirst();
+
+        if (serie.isPresent()) {
+
+            var serieEncontrada = serie.get();
+            List<DadosTemporada> temporadas = new ArrayList<>();
+
+            for (int i = 1; i <= serieEncontrada.getTotalTemporadas(); i++) {
+
+                var json = consumo.obterDados(
+                        ENDERECO + serieEncontrada.getTitulo().replace(" ", "+")
+                                + "&season=" + i + API_KEY
+                );
+
+                DadosTemporada temporada =
+                        conversor.obterDados(json, DadosTemporada.class);
+
+                temporadas.add(temporada);
+            }
+
+            temporadas.forEach(System.out::println);
+
+            List<Episodio> episodios = temporadas.stream()
+                    .flatMap(t -> t.episodios().stream()
+                            .map(e -> new Episodio(t.numero(), e)))
+                    .collect(Collectors.toList());
+
+            serieEncontrada.setEpisodios(episodios);
+            repositorioSerie.save(serieEncontrada);
+
+        } else {
+            System.out.println("Série não encontrada!");
         }
-
-        List<DadosTemporada> temporadas = new ArrayList<>();
-
-        for (int i = 1; i <= dadosSerie.totalTemporadas(); i++) {
-            var json = consumo.obterDados(
-                    ENDERECO + dadosSerie.titulo().replace(" ", "+")
-                            + "&season=" + i + API_KEY
-            );
-
-            DadosTemporada dadosTemporada =
-                    conversor.obterDados(json, DadosTemporada.class);
-
-            temporadas.add(dadosTemporada);
-        }
-
-        temporadas.forEach(System.out::println);
     }
+
     private List<DadosSerie> dadosSeries = new ArrayList<>();
-    private void listarSeriesBuscadas(){
-        List<Serie> series = dadosSeries.stream()
-                .map(Serie::new)
-                .toList();
+
+    private void listarSeriesBuscadas() {
+        series = repositorioSerie.findAll();
 
         if (series.isEmpty()) {
             System.out.println("Nenhuma série foi buscada ainda.");
@@ -140,7 +159,7 @@ public class Principal {
     }
 
     // ========================= FILME =========================
-    private List<DadosFilme> dadosFilmes = new ArrayList<>();
+
     private void buscarFilmeWeb() {
         System.out.println("Digite o nome do filme para busca:");
         var nomeFilme = leitura.nextLine();
@@ -164,15 +183,18 @@ public class Principal {
 
         System.out.println(filme);
     }
+
     private void listarFilmesBuscados() {
 
-        if (dadosFilmes.isEmpty()) {
-            System.out.println("Nenhum filme foi buscado ainda.");
+        List<Filme> filmes = repositorioFilme.findAll();
+
+        if (filmes.isEmpty()) {
+            System.out.println("Nenhum filme foi salvo ainda.");
             return;
         }
 
-        dadosFilmes.stream()
-                .sorted(Comparator.comparing(DadosFilme::titulo))
+        filmes.stream()
+                .sorted(Comparator.comparing(Filme::getTitulo))
                 .forEach(System.out::println);
     }
 }
