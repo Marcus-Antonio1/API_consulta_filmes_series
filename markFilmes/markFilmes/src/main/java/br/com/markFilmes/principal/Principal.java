@@ -1,14 +1,12 @@
 package br.com.markFilmes.principal;
 
 import br.com.markFilmes.model.*;
+import br.com.markFilmes.repository.FilmeRepository;
+import br.com.markFilmes.repository.SerieRepository;
 import br.com.markFilmes.service.ConsumoApi;
 import br.com.markFilmes.service.ConverteDados;
 
-import javax.sound.midi.Soundbank;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Principal {
 
@@ -18,6 +16,15 @@ public class Principal {
     private Scanner leitura = new Scanner(System.in);
     private ConsumoApi consumo = new ConsumoApi();
     private ConverteDados conversor = new ConverteDados();
+
+    private SerieRepository repositorioSerie;
+    private FilmeRepository repositorioFilme;
+
+    public Principal(SerieRepository repositorioSerie, FilmeRepository repositorioFilme) {
+        this.repositorioSerie = repositorioSerie;
+        this.repositorioFilme = repositorioFilme;
+    }
+
 
     public void exibeMenu() {
         var opcao = -1;
@@ -68,7 +75,11 @@ public class Principal {
 
     private void buscarSerieWeb() {
         DadosSerie dados = getDadosSerie();
+        Serie serie = new Serie (dados);
+        //dadosSeries.add(dados);
+        repositorioSerie.save(serie);
         System.out.println(dados);
+
     }
 
     private DadosSerie getDadosSerie() {
@@ -145,9 +156,11 @@ public class Principal {
             return;
         }
 
-        DadosFilme filme = conversor.obterDados(json, DadosFilme.class);
+        DadosFilme dados = conversor.obterDados(json, DadosFilme.class);
 
-        dadosFilmes.add(filme);
+        Filme filme = new Filme(dados);
+
+        repositorioFilme.save(filme);
 
         System.out.println(filme);
     }

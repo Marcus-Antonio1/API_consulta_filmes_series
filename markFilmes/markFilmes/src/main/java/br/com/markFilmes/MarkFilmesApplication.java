@@ -4,8 +4,11 @@ import br.com.markFilmes.model.DadosEpisodio;
 import br.com.markFilmes.model.DadosSerie;
 import br.com.markFilmes.model.DadosTemporada;
 import br.com.markFilmes.principal.Principal;
+import br.com.markFilmes.repository.FilmeRepository;
+import br.com.markFilmes.repository.SerieRepository;
 import br.com.markFilmes.service.ConsumoApi;
 import br.com.markFilmes.service.ConverteDados;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,6 +23,10 @@ import java.util.List;
 
 @SpringBootApplication
 public class MarkFilmesApplication implements CommandLineRunner {
+	@Autowired
+	private SerieRepository repositorio;
+	@Autowired
+	private FilmeRepository repositorioFilme;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MarkFilmesApplication.class, args);
@@ -27,7 +34,7 @@ public class MarkFilmesApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Principal principal = new Principal();
+		Principal principal = new Principal(repositorio, repositorioFilme);
 		principal.exibeMenu();
 
 	}
