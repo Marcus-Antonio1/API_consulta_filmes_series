@@ -41,6 +41,8 @@ public class Principal {
                     3 - Buscar filmes
                     4 - Listar séries buscadas
                     5 - Listar filmes buscados
+                    6 - Buscar por ator
+                    7 - Buscar top 5 títulos
                     
                     0 - Sair
                     """;
@@ -64,6 +66,12 @@ public class Principal {
                     break;
                 case 5:
                     listarFilmesBuscados();
+                    break;
+                case 6:
+                    buscarPorAtor();
+                    break;
+                case 7:
+                    buscarTop5Titulos();
                     break;
                 case 0:
                     System.out.println("Saindo...");
@@ -197,5 +205,65 @@ public class Principal {
                 .sorted(Comparator.comparing(Filme::getTitulo))
                 .forEach(System.out::println);
     }
+
+    // ========================= ATOR =========================
+
+    private void buscarPorAtor() {
+        System.out.println("Digite o nome do ator:");
+        var nomeAtor = leitura.nextLine();
+
+        List<Serie> series = repositorioSerie.findByAtoresContainingIgnoreCase(nomeAtor);
+        List<Filme> filmes = repositorioFilme.findByAtoresContainingIgnoreCase(nomeAtor);
+
+        if (series.isEmpty() && filmes.isEmpty()) {
+            System.out.println("Nenhum título encontrado para esse ator.");
+            return;
+        }
+
+        System.out.println("\n=== SÉRIES ===");
+        series.forEach(System.out::println);
+
+        System.out.println("\n=== FILMES ===");
+        filmes.forEach(System.out::println);
+    }
+
+    // ========================= TOP 5 TITULOS =========================
+
+    private void buscarTop5Titulos() {
+
+        List<Serie> series = repositorioSerie.findAll();
+        List<Filme> filmes = repositorioFilme.findAll();
+
+        List<Object> titulos = new ArrayList<>();
+        titulos.addAll(series);
+        titulos.addAll(filmes);
+
+        if (titulos.isEmpty()) {
+            System.out.println("Nenhum título encontrado.");
+            return;
+        }
+
+        titulos.stream()
+                .sorted((t1, t2) -> {
+                    Double nota1 = (t1 instanceof Serie)
+                            ? ((Serie) t1).getAvaliacao()
+                            : ((Filme) t1).getAvaliacao();
+
+                    Double nota2 = (t2 instanceof Serie)
+                            ? ((Serie) t2).getAvaliacao()
+                            : ((Filme) t2).getAvaliacao();
+
+                    return nota2.compareTo(nota1);
+                })
+                .limit(5)
+                .forEach(t -> {
+                    if (t instanceof Serie) {
+                        System.out.println("Serie: " + t);
+                    } else {
+                        System.out.println("Filme: " + t);
+                    }
+                });
+    }
+
 }
 
