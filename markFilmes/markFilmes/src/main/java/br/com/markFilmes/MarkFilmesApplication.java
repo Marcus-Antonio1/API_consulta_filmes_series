@@ -22,21 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
-public class MarkFilmesApplication implements CommandLineRunner {
-	@Autowired
-	private SerieRepository repositorio;
-	@Autowired
-	private FilmeRepository repositorioFilme;
+public class MarkFilmesApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MarkFilmesApplication.class, args);
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
-		Principal principal = new Principal(repositorio, repositorioFilme);
-		principal.exibeMenu();
-
-	}
 
 }
