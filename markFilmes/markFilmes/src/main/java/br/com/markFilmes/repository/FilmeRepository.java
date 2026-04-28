@@ -10,5 +10,6 @@ public interface FilmeRepository extends JpaRepository<Filme, Long> {
 
     List<Filme> findByAtoresContainingIgnoreCase(String ator);
     List<Filme> findByGenero(Categoria genero);
-
+    List<Filme> findTop5ByOrderByAvaliacaoDesc();
+    List<Filme> findTop2ByOrderByIdDesc();
 }
