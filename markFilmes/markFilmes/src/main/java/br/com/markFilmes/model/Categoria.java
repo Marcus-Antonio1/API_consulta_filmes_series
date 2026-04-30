@@ -16,21 +16,19 @@ public enum Categoria {
         this.categoriaPortugues = categoriaPortugues;
     }
 
+    /** Converte nome em inglês vindo da OMDB → enum */
     public static Categoria fromString(String text) {
-        for (Categoria categoria : Categoria.values()) {
-            if (categoria.categoriaOmdb.equalsIgnoreCase(text)) {
-                return categoria;
-            }
+        for (Categoria c : Categoria.values()) {
+            if (c.categoriaOmdb.equalsIgnoreCase(text)) return c;
         }
-        throw new IllegalArgumentException("Nenhuma categoria encontrada para: " + text);
+        throw new IllegalArgumentException("Categoria não encontrada para: " + text);
     }
 
+    /** NOVO: converte nome em português vindo do front → enum */
     public static Categoria fromPortugues(String text) {
-        for (Categoria categoria : Categoria.values()) {
-            if (categoria.categoriaPortugues.equalsIgnoreCase(text.trim())) {
-                return categoria;
-            }
+        for (Categoria c : Categoria.values()) {
+            if (c.categoriaPortugues.equalsIgnoreCase(text.trim())) return c;
         }
-        throw new IllegalArgumentException("Nenhuma categoria encontrada para: " + text);
+        throw new IllegalArgumentException("Categoria não encontrada para: " + text);
     }
 }

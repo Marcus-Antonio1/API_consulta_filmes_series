@@ -32,22 +32,17 @@ public class SerieService {
 
     public SerieDTO obterPorId(Long id) {
         Optional<Serie> serie = repositorio.findById(id);
-        if (serie.isPresent()) {
-            Serie s = serie.get();
-            return toDTO(s);
-        }
-        return null;
+        return serie.map(this::toDTO).orElse(null);
     }
 
-    // NOVO: filtro por categoria para o select do front-end
+    // NOVO: filtro por categoria
     public List<SerieDTO> obterPorCategoria(String generoStr) {
-        Categoria categoria;
         try {
-            categoria = Categoria.fromPortugues(generoStr);
+            Categoria categoria = Categoria.fromPortugues(generoStr);
+            return converteDados(repositorio.findByGenero(categoria));
         } catch (IllegalArgumentException e) {
             return List.of();
         }
-        return converteDados(repositorio.findByGenero(categoria));
     }
 
     public List<EpisodioDTO> obterTemporadas(Long id) {

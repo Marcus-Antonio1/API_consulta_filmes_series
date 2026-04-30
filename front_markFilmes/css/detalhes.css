@@ -1,65 +1,156 @@
 body {
+    background: linear-gradient(180.61deg, #000 25%, #04254f 80%, #409ecd 100%);
     background-size: cover;
-    background-image: linear-gradient(180.61deg,
-            #000000e3 25.16%,
-            #04254fc4 80%,
-            #409ecdcb 100%);
-    padding: 5em;
-    height: 100%;
     min-height: 100vh;
-    /* Defina a altura como 100vh para ocupar toda a tela */
 }
 
-
-.ficha img {
-    margin: 0 3em 2em 0;
+main.ficha {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2.5em 2em;
 }
 
+.cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8em 2.5em;
+    background: rgba(0,0,0,0.50);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 1em;
+}
+
+.cabecalho__logo img { width: 130px; height: 44px; object-fit: contain; }
+
+.cabecalho__opcoes { display: flex; align-items: center; gap: 0.8em; }
+.cabecalho__opcoes a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.35em 0.8em;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+.cabecalho__opcoes a:hover { background: rgba(255,255,255,0.15); }
+
+/* ── Ficha ── */
 .ficha-descricao {
     display: flex;
+    gap: 2em;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 2em;
 }
 
-.ficha-descricao div {
+.ficha-poster {
+    width: 200px;
+    min-width: 160px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.7);
+    object-fit: cover;
+    aspect-ratio: 2/3;
+}
+
+.ficha-info {
     display: flex;
     flex-direction: column;
-    gap: 3em;
+    gap: 0.8em;
+    flex: 1;
+    min-width: 200px;
+    color: white;
+}
+
+.ficha-info h2 {
+    font-size: clamp(1.3rem, 3.5vw, 2.2rem);
+    line-height: 1.2;
+    word-break: break-word;
+    border: none;
+    padding: 0;
+}
+
+.ficha-genero  { font-size: 0.9rem;  color: #aad4f0; font-weight: 500; }
+.ficha-avaliacao { font-size: 1.1rem; color: #f5c518; }
+.ficha-sinopse { font-size: 0.95rem; line-height: 1.7; color: #ddd; max-width: 600px; }
+.ficha-elenco  { font-size: 0.88rem; color: #bbb; line-height: 1.6; }
+
+/* ── Temporadas ── */
+.ficha-temporada { margin-bottom: 1.2em; }
+.ficha-temporada h3 { font-size: 1rem; color: #aad4f0; margin-bottom: 0.5em; }
+
+.dropdown-select, select {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 0.95rem;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    padding: 0.45em 1em;
+    outline: none;
+    cursor: pointer;
+    min-width: 220px;
+}
+.dropdown-select:hover, select:hover { border-color: #409ecd; }
+option { background: #04254f; color: #fff; }
+
+/* ── Episodios ── */
+.episodios { margin-top: 0.5em; }
+
+.temporada-titulo {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #409ecd;
+    margin: 1.2em 0 0.4em;
 }
 
 .episodios-lista {
-    height: 25vh;
+    list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 1em;
-    flex-wrap: wrap;
-    list-style-type: none;
+    gap: 0.3em;
+    max-height: 280px;
+    overflow-y: auto;
+    padding-right: 0.4em;
 }
 
-h2 {
-    font-size: 48px;
+.episodios-lista::-webkit-scrollbar { width: 5px; }
+.episodios-lista::-webkit-scrollbar-thumb { background: #409ecd; border-radius: 4px; }
+
+.episodios-lista li {
+    display: flex;
+    gap: 0.7em;
+    font-size: 0.88rem;
+    color: #ccc;
+    padding: 0.3em 0.6em;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.05);
+    transition: background 0.15s;
 }
+.episodios-lista li:hover { background: rgba(255,255,255,0.1); color: #fff; }
 
-p {
-    font-size: 22px;
+.ep-numero { color: #409ecd; font-weight: 700; flex-shrink: 0; }
+.ep-titulo  { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ── Botao voltar ── */
+.btn-voltar {
+    display: inline-block;
+    margin-top: 1em;
+    padding: 0.55em 1.2em;
+    background: #409ecd;
+    color: #fff;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: background 0.2s;
 }
+.btn-voltar:hover { background: #2d7ea8; }
 
-select,
-option {
-    font-size: 24px;
-    padding: 0 1em;
-    margin-bottom: 1em;
-}
-
-select {
-    border-radius: 24px;
-    border: none;
-    outline: none;
-    width: 10%;
-}
-
-@media screen and (max-width: 900px) {
-
-    .ficha-descricao,
-    .episodios-lista {
-        display: block;
-    }
+@media (max-width: 600px) {
+    main.ficha { padding: 1.2em 0.8em; }
+    .ficha-descricao { flex-direction: column; }
+    .ficha-poster { width: 100%; min-width: unset; }
 }

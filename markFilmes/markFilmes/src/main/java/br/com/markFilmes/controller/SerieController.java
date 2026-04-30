@@ -47,18 +47,14 @@ public class SerieController {
             @PathVariable String numero
     ) {
         List<EpisodioDTO> episodios = servico.obterTemporadas(id);
-
-        if (numero.equalsIgnoreCase("todas")) {
-            return episodios;
-        }
-
+        if (numero.equalsIgnoreCase("todas")) return episodios;
         Integer temp = Integer.valueOf(numero);
         return episodios.stream()
                 .filter(e -> e.temporada().equals(temp))
                 .collect(Collectors.toList());
     }
 
-    // NOVO: filtro por categoria — usado pelo select do front-end
+    // NOVO: filtro por categoria
     @GetMapping("/categoria/{genero}")
     public List<SerieDTO> obterPorCategoria(@PathVariable String genero) {
         return servico.obterPorCategoria(genero);
