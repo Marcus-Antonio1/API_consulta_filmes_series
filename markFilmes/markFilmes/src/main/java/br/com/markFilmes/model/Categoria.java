@@ -1,9 +1,9 @@
 package br.com.markFilmes.model;
 
 public enum Categoria {
-    ACAO("Action", "ação"),
+    ACAO("Action", "acao"),
     ROMANCE("Romance", "romance"),
-    COMEDIA("Comedy", "comédia"),
+    COMEDIA("Comedy", "comedia"),
     DRAMA("Drama", "drama"),
     CRIME("Crime", "crime"),
     AVENTURA("Adventure", "aventura");
@@ -16,19 +16,18 @@ public enum Categoria {
         this.categoriaPortugues = categoriaPortugues;
     }
 
-    /** Converte nome em inglês vindo da OMDB → enum */
+    /** Converte nome em ingles vindo da OMDB */
     public static Categoria fromString(String text) {
         for (Categoria c : Categoria.values()) {
             if (c.categoriaOmdb.equalsIgnoreCase(text)) return c;
         }
-        throw new IllegalArgumentException("Categoria não encontrada para: " + text);
+        throw new IllegalArgumentException("Categoria nao encontrada: " + text);
     }
 
-    /** NOVO: converte nome em português vindo do front → enum */
     public static Categoria fromPortugues(String text) {
         for (Categoria c : Categoria.values()) {
             if (c.categoriaPortugues.equalsIgnoreCase(text.trim())) return c;
         }
-        throw new IllegalArgumentException("Categoria não encontrada para: " + text);
+        throw new IllegalArgumentException("Categoria nao encontrada: " + text);
     }
 }

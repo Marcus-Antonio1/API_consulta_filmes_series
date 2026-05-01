@@ -16,14 +16,13 @@ public class FilmeController {
     @Autowired
     private FilmeRepository repositorio;
 
-    // BUG CORRIGIDO: antes não tinha @PathVariable e devolvia findAll()
+
     @GetMapping("/{id}")
     public Filme obterFilmePorId(@PathVariable Long id) {
         Optional<Filme> filme = repositorio.findById(id);
         return filme.orElse(null);
     }
 
-    // BUG CORRIGIDO: endpoint GET /filmes não existia — filmes nunca apareciam
     @GetMapping
     public List<Filme> obterTodosOsFilmes() {
         return repositorio.findAll();
@@ -39,7 +38,7 @@ public class FilmeController {
         return repositorio.findTop2ByOrderByIdDesc();
     }
 
-    // NOVO: filtro por categoria
+
     @GetMapping("/categoria/{genero}")
     public List<Filme> filmePorCategoria(@PathVariable String genero) {
         try {

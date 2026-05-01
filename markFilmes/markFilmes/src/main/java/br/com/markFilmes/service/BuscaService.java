@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 /**
  * Responsável por buscar títulos na API OMDB, salvar no banco
- * e retornar o resultado — tudo sem precisar do menu do Principal.java.
+ * e retornar o resultado tudo sem precisar do menu do Principal.java.
  */
 @Service
 public class BuscaService {
@@ -53,7 +53,7 @@ public class BuscaService {
     // ── Série ─────────────────────────────────────────────────────────────────
 
     private ResultadoBusca buscarESalvarSerie(String json, String tituloOmdb) {
-        // Verifica duplicata
+
         Optional<Serie> existente = serieRepository.findByTituloContainingIgnoreCase(tituloOmdb);
         if (existente.isPresent()) {
             return new ResultadoBusca("serie_existente",
@@ -89,7 +89,7 @@ public class BuscaService {
     // ── Filme ─────────────────────────────────────────────────────────────────
 
     private ResultadoBusca buscarESalvarFilme(String json, String tituloOmdb) {
-        // Verifica duplicata
+
         boolean jaExiste = filmeRepository.findAll().stream()
                 .anyMatch(f -> f.getTitulo().equalsIgnoreCase(tituloOmdb));
 

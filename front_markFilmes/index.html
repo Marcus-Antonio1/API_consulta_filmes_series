@@ -24,7 +24,6 @@
             </select>
         </div>
 
-        <!-- NOVO: campo de busca -->
         <div class="cabecalho__busca">
             <div class="busca-wrapper">
                 <input type="text" id="input-busca" placeholder="Buscar filme ou serie..." autocomplete="off">
@@ -42,18 +41,24 @@
     </header>
 
     <main>
-        <section data-name="lancamentos" class="section">
-            <h2>Lancamentos no MarkFilmes</h2>
+        <section data-name="lancamentos" class="section" data-titulo="Séries lançadas recentemente no MarkFilmes">
+            <h2>Séries lançadas recentemente no MarkFilmes</h2>
         </section>
-        <section data-name="top5" class="section">
-            <h2>Titulos populares no MarkFilmes</h2>
+
+        <section data-name="top5" class="section" data-titulo="Mais populares">
+            <h2>Mais populares</h2>
         </section>
-        <section data-name="series" class="section">
+
+        <section data-name="series" class="section" data-titulo="Series no MarkFilmes">
             <h2>Series no MarkFilmes</h2>
         </section>
-        <section data-name="filmes" class="section">
+
+        <div class="separador" data-separador></div>
+
+        <section data-name="filmes" class="section section--filmes" data-titulo="Filmes no MarkFilmes">
             <h2>Filmes no MarkFilmes</h2>
         </section>
+
         <section data-name="categoria" class="hidden pesquisa">
             <h2>Titulos por categoria</h2>
         </section>

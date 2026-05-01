@@ -1,5 +1,6 @@
 package br.com.markFilmes.model;
 
+import br.com.markFilmes.service.traducao.ConsultaMyMemory;
 import jakarta.persistence.*;
 
 @Entity
@@ -30,99 +31,38 @@ public class Filme {
         this.titulo = dadosFilme.titulo();
         this.anoLancamento = dadosFilme.anoLancamento();
         this.duracao = dadosFilme.duracaoFilme();
-
         try {
             this.avaliacao = Double.valueOf(dadosFilme.avaliacao());
         } catch (NumberFormatException e) {
             this.avaliacao = 0.0;
         }
-
         this.genero = Categoria.fromString(dadosFilme.genero().split(",")[0].trim());
         this.atores = dadosFilme.atores();
         this.poster = dadosFilme.poster();
-        this.sinopse = dadosFilme.sinopse(); //Caso for usar a API do Chat GPT basta alterar o ConsultaMyMemory para ConsultaChatGPT
+        this.sinopse = ConsultaMyMemory.obterTraducao(dadosFilme.sinopse()).trim();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public Integer getAnoLancamento() {
-        return anoLancamento;
-    }
-
-    public void setAnoLancamento(Integer anoLancamento) {
-        this.anoLancamento = anoLancamento;
-    }
-
-    public String getDuracao() {
-        return duracao;
-    }
-
-    public void setDuracao(String duracao) {
-        this.duracao = duracao;
-    }
-
-    public Double getAvaliacao() {
-        return avaliacao;
-    }
-
-    public void setAvaliacao(Double avaliacao) {
-        this.avaliacao = avaliacao;
-    }
-
-    public Categoria getGenero() {
-        return genero;
-    }
-
-    public void setGenero(Categoria genero) {
-        this.genero = genero;
-    }
-
-    public String getAtores() {
-        return atores;
-    }
-
-    public void setAtores(String atores) {
-        this.atores = atores;
-    }
-
-    public String getPoster() {
-        return poster;
-    }
-
-    public void setPoster(String poster) {
-        this.poster = poster;
-    }
-
-    public String getSinopse() {
-        return sinopse;
-    }
-
-    public void setSinopse(String sinopse) {
-        this.sinopse = sinopse;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getTitulo() { return titulo; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
+    public Integer getAnoLancamento() { return anoLancamento; }
+    public void setAnoLancamento(Integer a) { this.anoLancamento = a; }
+    public String getDuracao() { return duracao; }
+    public void setDuracao(String d) { this.duracao = d; }
+    public Double getAvaliacao() { return avaliacao; }
+    public void setAvaliacao(Double a) { this.avaliacao = a; }
+    public Categoria getGenero() { return genero; }
+    public void setGenero(Categoria g) { this.genero = g; }
+    public String getAtores() { return atores; }
+    public void setAtores(String a) { this.atores = a; }
+    public String getPoster() { return poster; }
+    public void setPoster(String p) { this.poster = p; }
+    public String getSinopse() { return sinopse; }
+    public void setSinopse(String s) { this.sinopse = s; }
 
     @Override
     public String toString() {
-        return "Filme{" +
-                "titulo='" + titulo + '\'' +
-                ", anoLancamento=" + anoLancamento +
-                ", duracao='" + duracao + '\'' +
-                ", avaliacao=" + avaliacao +
-                ", genero=" + genero +
-                '}';
+        return "Filme{titulo='" + titulo + "', anoLancamento=" + anoLancamento + ", genero=" + genero + '}';
     }
 }

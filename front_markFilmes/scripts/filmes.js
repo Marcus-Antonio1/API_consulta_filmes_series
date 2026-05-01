@@ -39,7 +39,7 @@ function geraFilmes() {
 }
 
 const categoriaSelect = document.querySelector('[data-categorias]');
-const sectionsNormais = document.querySelectorAll('.section:not([data-name="categoria"])');
+const sectionsNormais = document.querySelectorAll('.section');
 
 if (categoriaSelect) {
     categoriaSelect.addEventListener('change', function () {

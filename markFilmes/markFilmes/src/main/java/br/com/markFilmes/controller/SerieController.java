@@ -54,7 +54,7 @@ public class SerieController {
                 .collect(Collectors.toList());
     }
 
-    // NOVO: filtro por categoria
+
     @GetMapping("/categoria/{genero}")
     public List<SerieDTO> obterPorCategoria(@PathVariable String genero) {
         return servico.obterPorCategoria(genero);
