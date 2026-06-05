@@ -1,0 +1,230 @@
+body {
+  background:
+    radial-gradient(ellipse 60% 30% at 50% 0%, rgba(64,158,205,0.12) 0%, transparent 65%),
+    #07090f;
+}
+
+.cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 1.2em;
+  padding: 0 2.5em;
+  height: 64px;
+  background: rgba(7,9,15,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+.cabecalho__logo img { height: 36px; object-fit: contain; }
+.cabecalho__opcoes { display: flex; align-items: center; gap: 0.5em; margin-left: auto; }
+.cabecalho__opcoes a {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.4em 0.9em;
+  border-radius: 8px;
+  transition: color var(--trans), background var(--trans);
+}
+.cabecalho__opcoes a:hover { color: var(--text); background: rgba(255,255,255,0.08); }
+
+main.ficha {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 3em 2em;
+}
+
+/* breadcrumb */
+.breadcrumb {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 2em;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+.breadcrumb a { color: var(--accent); }
+.breadcrumb a:hover { text-decoration: underline; }
+
+.ficha-descricao {
+  display: flex;
+  gap: 2.5em;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 2.5em;
+}
+
+.ficha-poster {
+  width: 220px;
+  min-width: 180px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.8);
+  object-fit: cover;
+  aspect-ratio: 2/3;
+  border: 1px solid var(--border);
+}
+
+.ficha-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  flex: 1;
+  min-width: 200px;
+}
+
+.ficha-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  background: rgba(64,158,205,0.15);
+  border: 1px solid rgba(64,158,205,0.3);
+  color: #7dc9f0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25em 0.7em;
+  border-radius: 20px;
+  width: fit-content;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ficha-info h2 {
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.15;
+  word-break: break-word;
+}
+
+.ficha-meta {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  flex-wrap: wrap;
+}
+
+.ficha-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.ficha-avaliacao {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f5c518;
+}
+.ficha-avaliacao span { font-size: 0.85rem; color: var(--text-muted); font-weight: 400; }
+
+.ficha-sinopse {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: #c8cdd4;
+  max-width: 580px;
+}
+
+.ficha-elenco {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.ficha-elenco strong { color: var(--text); }
+
+.btn-voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.6em 1.3em;
+  background: rgba(64,158,205,0.15);
+  border: 1px solid rgba(64,158,205,0.35);
+  color: var(--accent);
+  border-radius: 9px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: background var(--trans), border-color var(--trans);
+  width: fit-content;
+}
+.btn-voltar:hover { background: rgba(64,158,205,0.25); border-color: var(--accent); }
+
+/* temporadas */
+.ficha-temporada { margin-bottom: 1.5em; }
+.ficha-temporada h3 { font-size: 0.92rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.7em; text-transform: uppercase; letter-spacing: 0.06em; }
+
+.dropdown-select {
+  appearance: none;
+  background: rgba(255,255,255,0.07);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 0.6em 2.5em 0.6em 1em;
+  outline: none;
+  cursor: pointer;
+  min-width: 220px;
+  transition: border-color var(--trans);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ba3af' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+.dropdown-select:hover { border-color: var(--accent); }
+.dropdown-select option { background: #10151f; }
+
+/* episódios */
+.episodios { margin-top: 0.5em; }
+
+.temporada-titulo {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 1.5em 0 0.5em;
+}
+
+.episodios-lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 0.5em;
+}
+.episodios-lista li {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  padding: 0.45em 0.75em;
+  border-radius: 7px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid transparent;
+  transition: background var(--trans), color var(--trans), border-color var(--trans);
+}
+.episodios-lista li:hover {
+  background: rgba(64,158,205,0.08);
+  color: var(--text);
+  border-color: rgba(64,158,205,0.2);
+}
+.ep-numero {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.78rem;
+  min-width: 48px;
+  flex-shrink: 0;
+}
+.ep-titulo { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+@media (max-width: 640px) {
+  main.ficha { padding: 1.5em 1em; }
+  .ficha-descricao { flex-direction: column; }
+  .ficha-poster { width: 100%; max-width: 260px; }
+}

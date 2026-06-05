@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/detalhes.css">
+  <title>Série - MarkFilmes</title>
+</head>
+<body>
+  <header class="cabecalho">
+    <div class="cabecalho__logo"><img src="./img/LogoMarkFilmes.png" alt="MarkFilmes"></div>
+    <nav class="cabecalho__opcoes">
+      <a href="index.html">Home</a>
+      <a href="filmes.html">Filmes</a>
+    </nav>
+  </header>
+
+  <main class="ficha">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>Séries</span>
+      <span>/</span>
+      <span id="breadcrumb-titulo">...</span>
+    </div>
+    <div class="ficha-descricao" id="ficha-descricao"></div>
+    <div class="ficha-temporada">
+      <h3>Temporadas</h3>
+      <select id="temporadas-select" class="dropdown-select"></select>
+    </div>
+    <div class="episodios" id="temporadas-episodios"></div>
+  </main>
+
+  <script src="./scripts/series.js" type="module"></script>
+</body>
+</html>
