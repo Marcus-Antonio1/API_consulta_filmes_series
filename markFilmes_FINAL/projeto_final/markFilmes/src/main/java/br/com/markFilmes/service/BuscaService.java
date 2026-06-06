@@ -31,23 +31,50 @@ public class BuscaService {
         DadosGerais geral = conversor.obterDados(json, DadosGerais.class);
 
         if (geral == null || geral.titulo() == null) {
-            return new ResultadoBusca("erro", "Titulo nao encontrado na OMDB.", null, null);
+            return new ResultadoBusca(
+                    "erro",
+                    "Titulo nao encontrado na OMDB.",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+            );
         }
 
         String tipo = geral.tipo() != null ? geral.tipo().toLowerCase() : "";
         return switch (tipo) {
             case "series" -> buscarESalvarSerie(json, geral.titulo());
             case "movie"  -> buscarESalvarFilme(json, geral.titulo());
-            default       -> new ResultadoBusca("erro", "Tipo desconhecido: " + tipo, null, null);
+            default -> new ResultadoBusca(
+                    "erro",
+                    "Tipo desconhecido: " + tipo,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+            );
         };
     }
 
     private ResultadoBusca buscarESalvarSerie(String json, String tituloOmdb) {
         Optional<Serie> existente = serieRepository.findByTituloContainingIgnoreCase(tituloOmdb);
         if (existente.isPresent()) {
-            return new ResultadoBusca("serie_existente",
-                "Serie ja esta no banco: " + existente.get().getTitulo(),
-                existente.get().getId(), null);
+            Serie serie = existente.get();
+
+            return new ResultadoBusca(
+                    "serie_existente",
+                    "Série já cadastrada",
+                    serie.getId(),
+                    null,
+                    serie.getTitulo(),
+                    serie.getPoster(),
+                    null,
+                    serie.getAvaliacao()
+            );
         }
         DadosSerie dadosSerie = conversor.obterDados(json, DadosSerie.class);
         Serie serie = new Serie(dadosSerie);
@@ -72,7 +99,16 @@ public class BuscaService {
 
         serie.setEpisodios(episodios);
         serieRepository.save(serie);
-        return new ResultadoBusca("serie", "Serie salva com sucesso!", serie.getId(), null);
+        return new ResultadoBusca(
+                "serie",
+                "Série adicionada com sucesso",
+                serie.getId(),
+                null,
+                serie.getTitulo(),
+                serie.getPoster(),
+                serie.getTotalTemporadas() + " temporadas",
+                serie.getAvaliacao()
+        );
     }
 
     private ResultadoBusca buscarESalvarFilme(String json, String tituloOmdb) {
@@ -82,14 +118,40 @@ public class BuscaService {
             Filme f = filmeRepository.findAll().stream()
                 .filter(x -> x.getTitulo().equalsIgnoreCase(tituloOmdb))
                 .findFirst().orElseThrow();
-            return new ResultadoBusca("filme_existente",
-                "Filme ja esta no banco: " + f.getTitulo(), null, f.getId());
+            return new ResultadoBusca(
+                    "filme_existente",
+                    "Filme já cadastrado",
+                    null,
+                    f.getId(),
+                    f.getTitulo(),
+                    f.getPoster(),
+                    String.valueOf(f.getAnoLancamento()),
+                    f.getAvaliacao()
+            );
         }
         DadosFilme dadosFilme = conversor.obterDados(json, DadosFilme.class);
         Filme filme = new Filme(dadosFilme);
         filmeRepository.save(filme);
-        return new ResultadoBusca("filme", "Filme salvo com sucesso!", null, filme.getId());
+        return new ResultadoBusca(
+                "filme",
+                "Filme adicionado com sucesso",
+                null,
+                filme.getId(),
+                filme.getTitulo(),
+                filme.getPoster(),
+                String.valueOf(filme.getAnoLancamento()),
+                filme.getAvaliacao()
+        );
     }
 
-    public record ResultadoBusca(String tipo, String mensagem, Long serieId, Long filmeId) {}
+    public record ResultadoBusca(
+            String tipo,
+            String mensagem,
+            Long serieId,
+            Long filmeId,
+            String titulo,
+            String poster,
+            String ano,
+            Double avaliacao
+    ) {}
 }

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description"
+content="MarkFilmes - Catálogo de Filmes e Séries">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
+
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="css/home.css">
+
+<title>MarkFilmes</title>
+</head>
+
+<body>
+
+<header class="cabecalho">
+
+    <div class="cabecalho__logo">
+        <img
+            src="./img/LogoMarkFilmes.png"
+            alt="MarkFilmes">
+    </div>
+
+    <div class="select-wrapper">
+
+        <select data-categorias>
+
+            <option value="todos">Categorias</option>
+
+            <option value="comedia">Comédia</option>
+
+            <option value="acao">Ação</option>
+
+            <option value="crime">Crime</option>
+
+            <option value="drama">Drama</option>
+
+            <option value="aventura">Aventura</option>
+
+        </select>
+
+    </div>
+
+    <nav class="cabecalho__opcoes">
+
+        <a href="index.html" class="active">
+            Home
+        </a>
+
+        <a href="filmes.html">
+            Filmes
+        </a>
+
+        <a href="series.html">
+            Séries
+        </a>
+
+        <a href="#">
+            Favoritos
+        </a>
+
+    </nav>
+
+</header>
+
+<main>
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <span class="hero-badge">
+            🎬 Plataforma de Filmes e Séries
+        </span>
+
+        <h1>
+
+            Descubra, explore e acompanhe
+
+            <span>
+                seus títulos favoritos
+            </span>
+
+        </h1>
+
+        <p>
+
+            Busque qualquer filme ou série.
+            O MarkFilmes adiciona automaticamente
+            ao catálogo e exibe todas as informações.
+
+        </p>
+
+        <div class="hero-busca-wrapper">
+
+            <input
+                type="text"
+                id="hero-input"
+                placeholder="Ex: Breaking Bad, Dark, Interstellar...">
+
+            <button id="hero-btn">
+
+                Buscar
+
+            </button>
+
+        </div>
+
+        <div
+            id="hero-feedback"
+            class="feedback-busca"
+            style="display:none">
+        </div>
+
+    </div>
+
+</section>
+
+<section
+    id="resultado-busca"
+    class="section hidden">
+
+    <h2>
+        🔎 Resultado da Busca
+    </h2>
+
+    <div id="resultado-lista"></div>
+
+</section>
+
+<section
+    data-name="lancamentos"
+    class="section"
+    data-titulo="🔥 Em Destaque">
+
+    <h2>
+        🔥 Em Destaque
+    </h2>
+
+</section>
+
+<section
+    data-name="series"
+    class="section"
+    data-titulo="📺 Séries Populares">
+
+    <h2>
+        📺 Séries Populares
+    </h2>
+
+</section>
+
+<section
+    data-name="filmes"
+    class="section section--filmes"
+    data-titulo="🎬 Filmes Populares">
+
+    <h2>
+        🎬 Filmes Populares
+    </h2>
+
+</section>
+
+<section
+    data-name="categoria"
+    class="hidden pesquisa">
+
+    <h2>
+        Categoria
+    </h2>
+
+</section>
+
+</main>
+
+<script src="./scripts/index.js" type="module"></script>
+
+</body>
+</html>

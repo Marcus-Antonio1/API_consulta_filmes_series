@@ -23,35 +23,22 @@
         <option value="aventura">Aventura</option>
       </select>
     </div>
-    <div class="cabecalho__busca">
-      <div class="busca-wrapper">
-        <input type="text" id="input-busca" placeholder="Buscar filme..." autocomplete="off">
-        <button id="btn-busca"><span class="material-symbols-outlined">search</span></button>
-      </div>
-      <div id="feedback-busca" class="feedback-busca" style="display:none"></div>
-    </div>
     <nav class="cabecalho__opcoes">
       <a href="index.html">Home</a>
-      <a href="filmes.html">Filmes</a>
-      <a href="series.html" class="active">Séries</a>
+      <a href="filmes.html" class="active">Filmes</a>
+      <a href="series.html">Séries</a>
     </nav>
   </header>
 
   <main>
-    <section data-name="lancamentos" class="section" data-titulo="Lancamentos">
-      <h2>Lançamentos</h2>
-    </section>
-    <section data-name="top5" class="section" data-titulo="Mais populares">
-      <h2>Mais populares</h2>
-    </section>
-    <section data-name="filmes" class="section" data-titulo="Todos os filmes">
-      <h2>Todos os filmes</h2>
-    </section>
-    <section data-name="categoria" class="hidden pesquisa">
-      <h2>Categoria</h2>
-    </section>
-  </main>
+  <section class="carousel-section">
+    <h2>Filmes</h2>
+    <div class="carousel" id="filmes-carousel"></div>
+  </section>
 
-  <script src="./scripts/series.js" type="module"></script>
+
+</main>
+
+  <script src="./scripts/filmes.js" type="module"></script>
 </body>
 </html>

@@ -40,6 +40,7 @@ function carregarInfo() {
   }).catch(console.error);
 }
 
+
 function carregarTemporadas() {
   getDados('/series/' + serieId + '/temporadas/todas').then(eps => {
     if (!eps || !eps.length) { selTemp.innerHTML = '<option>Sem temporadas</option>'; return; }

@@ -9,19 +9,32 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/buscar")
-@Tag(name = "Busca", description = "Busca titulos na OMDB e salva no banco")
+@Tag(name = "Busca", description = "Busca títulos na OMDB e salva no banco")
 public class BuscaController {
 
     @Autowired
     private BuscaService buscaService;
 
     @PostMapping
-    @Operation(summary = "Busca um titulo na OMDB pelo nome e salva no banco")
-    public ResponseEntity<BuscaService.ResultadoBusca> buscar(@RequestParam String titulo) {
+    @Operation(summary = "Busca um título na OMDB pelo nome e salva no banco")
+    public ResponseEntity<BuscaService.ResultadoBusca> buscar(
+            @RequestParam String titulo) {
+
         if (titulo == null || titulo.isBlank()) {
+
             return ResponseEntity.badRequest()
-                .body(new BuscaService.ResultadoBusca("erro", "Titulo nao informado.", null, null));
+                    .body(new BuscaService.ResultadoBusca(
+                            "erro",
+                            "Titulo nao informado.",
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null
+                    ));
         }
+
         return ResponseEntity.ok(buscaService.buscar(titulo));
     }
 }
