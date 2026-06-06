@@ -123,5 +123,5 @@ function carregarEpisodios() {
     .catch(console.error);
 }
 
-// Executa a inicialização ao carregar o arquivo
+
 inicializarDetalhes();

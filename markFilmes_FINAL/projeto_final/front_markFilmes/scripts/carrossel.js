@@ -19,15 +19,14 @@ export function criarCard(item, tipo) {
       </div>
     </div>
   `;
-  // clique no poster → abre modal
+  // clique na imagem → abre modal
   div.querySelector('img').addEventListener('click', () => abrirModal(item, tipo));
   div.querySelector('.card-overlay-titulo').addEventListener('click', () => abrirModal(item, tipo));
-  // botão Ver → navega
   div.querySelector('.card-btn-ver').addEventListener('click', e => {
     e.stopPropagation();
     window.location.href = href;
   });
-  // botão Fav
+  // botão  para favoritar
   div.querySelector('.card-btn-fav').addEventListener('click', e => {
     e.stopPropagation();
     const btn = e.currentTarget;
@@ -47,7 +46,6 @@ export function preencherCarrossel(trackId, dados, tipo, infinito = false) {
   // duplica para carrossel infinito
   if (infinito) {
     cards.forEach(c => track.appendChild(c.cloneNode(true)));
-    // re-bind nos clones
     track.querySelectorAll('.card-btn-fav').forEach(btn => {
       btn.addEventListener('click', e => {
         e.stopPropagation();

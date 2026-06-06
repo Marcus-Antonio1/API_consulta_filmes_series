@@ -1,5 +1,5 @@
 import getDados from './getDados.js';
-import { preencherCarrossel } from './carousel.js';
+import { preencherCarrossel } from './carrossel.js';
 
 async function carregar() {
   try {
@@ -25,7 +25,7 @@ if (catSelect) {
     const series = await getDados('/series/categoria/' + encodeURIComponent(cat));
     const track = document.getElementById('carousel-categoria');
     if (track) { track.innerHTML = ''; track.className = 'carousel-track'; }
-    const { criarCard } = await import('./carousel.js');
+    const { criarCard } = await import('./carrossel.js');
     series.forEach(s => track && track.appendChild(criarCard(s, 'serie')));
   });
 }
