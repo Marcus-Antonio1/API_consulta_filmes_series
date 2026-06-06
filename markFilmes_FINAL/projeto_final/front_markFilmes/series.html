@@ -4,39 +4,57 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="css/home.css">
-  <title>Filmes - MarkFilmes</title>
+  <title>Séries - MarkFilmes</title>
 </head>
 <body>
-  <header class="cabecalho">
-    <div class="cabecalho__logo"><img src="./img/LogoMarkFilmes.png" alt="MarkFilmes"></div>
-    <div class="select-wrapper">
-      <select data-categorias>
-        <option value="todos">Categorias</option>
-        <option value="comedia">Comédia</option>
-        <option value="acao">Ação</option>
-        <option value="crime">Crime</option>
-        <option value="drama">Drama</option>
-        <option value="aventura">Aventura</option>
-      </select>
+<header class="cabecalho">
+  <div class="cabecalho__logo"><img src="./img/LogoMarkFilmes.png" alt="MarkFilmes"></div>
+  <div class="select-wrapper">
+    <select data-categorias>
+      <option value="todos">Categorias</option>
+      <option value="comedia">Comédia</option>
+      <option value="acao">Ação</option>
+      <option value="crime">Crime</option>
+      <option value="drama">Drama</option>
+      <option value="aventura">Aventura</option>
+    </select>
+  </div>
+  <nav class="cabecalho__opcoes">
+    <a href="index.html">Home</a>
+    <a href="filmes.html">Filmes</a>
+    <a href="series.html" class="active">Séries</a>
+    <a href="favoritos.html">❤ Favoritos <span class="nav-fav-count" id="fav-count"></span></a>
+  </nav>
+</header>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="modal-content">
+    <button class="modal-close" id="modal-close">✕</button>
+    <div class="modal-inner" id="modal-inner"></div>
+    <div class="modal-temporadas hidden" id="modal-temporadas"></div>
+  </div>
+</div>
+
+<main>
+  <section class="section">
+    <div class="section-header"><h2>📺 Todas as Séries</h2></div>
+    <div class="carousel-track-wrapper">
+      <div class="carousel-track infinite" id="carousel-series"></div>
     </div>
-    <nav class="cabecalho__opcoes">
-      <a href="index.html">Home</a>
-      <a href="filmes.html">Filmes</a>
-      <a href="series.html" class="active">Séries</a>
-    </nav>
-  </header>
-
-  <main>
-  <section class="carousel-section">
-    <h2>Séries</h2>
-    <div class="carousel" id="series-carousel"></div>
   </section>
-
+  <section data-name="categoria" class="section hidden">
+    <div class="section-header"><h2 id="cat-titulo">Categoria</h2></div>
+    <div class="carousel-track-wrapper controlled">
+      <div class="carousel-track" id="carousel-categoria"></div>
+    </div>
+  </section>
 </main>
-  <script src="./scripts/serie-detalhe.js" type="module"></script>
+<script src="./scripts/favoritos.js" type="module"></script>
+<script src="./scripts/modal.js" type="module"></script>
+<script src="./scripts/series.js" type="module"></script>
 </body>
 </html>

@@ -1,215 +1,59 @@
 const BASE_URL = 'http://localhost:8080';
 
 export function inicializarBusca() {
-  bindBusca(
-    'input-busca',
-    'btn-busca',
-    'feedback-busca'
-  );
+  _bind('header-input', 'header-btn', null, true);
 }
 
 export function inicializarHeroBusca() {
-  bindBusca(
-    'hero-input',
-    'hero-btn',
-    'hero-feedback'
-  );
+  _bind('hero-input', 'hero-btn', 'hero-feedback', false);
 }
 
-function bindBusca(inputId, btnId, feedbackId) {
-
-  const input =
-    document.getElementById(inputId);
-
-  const btn =
-    document.getElementById(btnId);
-
-  const feedback =
-    document.getElementById(feedbackId);
-
+function _bind(inputId, btnId, fbId, redirectOnResult) {
+  const input = document.getElementById(inputId);
+  const btn   = document.getElementById(btnId);
+  const fb    = fbId ? document.getElementById(fbId) : null;
   if (!input || !btn) return;
-
-  btn.addEventListener(
-    'click',
-    () => executarBusca(input, feedback)
-  );
-
-  input.addEventListener(
-    'keydown',
-    e => {
-      if (e.key === 'Enter') {
-        executarBusca(input, feedback);
-      }
-    }
-  );
+  btn.addEventListener('click', () => _exec(input, fb, redirectOnResult));
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') _exec(input, fb, redirectOnResult); });
 }
 
-async function executarBusca(input, feedback) {
-
-  const titulo =
-    input.value.trim();
-
-  if (!titulo) {
-
-    mostrarFeedback(
-      feedback,
-      'warning',
-      'Digite um título.'
-    );
-
-    return;
-  }
-
-  mostrarFeedback(
-    feedback,
-    'loading',
-    'Buscando...'
-  );
-
+async function _exec(inputEl, fbEl, redirectOnResult) {
+  const titulo = inputEl.value.trim();
+  if (!titulo) { _fb(fbEl, 'warning', 'Digite um título.'); return; }
+  _fb(fbEl, 'loading', `Buscando "${titulo}"...`);
+  inputEl.disabled = true;
   try {
-
-    const resposta = await fetch(
-      `${BASE_URL}/buscar?titulo=${encodeURIComponent(titulo)}`,
-      {
-        method: 'POST'
-      }
-    );
-
-    const dados =
-      await resposta.json();
-
-    mostrarResultadoBusca(dados);
-
-    mostrarFeedback(
-      feedback,
-      'sucesso',
-      'Resultado encontrado.'
-    );
-
+    const res  = await fetch(`${BASE_URL}/buscar?titulo=${encodeURIComponent(titulo)}`, { method: 'POST' });
+    const data = await res.json();
+    inputEl.disabled = false;
+    inputEl.value = '';
+    switch (data.tipo) {
+      case 'serie':
+      case 'serie_existente':
+        _fb(fbEl, 'sucesso', 'Série encontrada! Abrindo...');
+        setTimeout(() => window.location.href = `detalhes.html?id=${data.serieId}`, 1100);
+        break;
+      case 'filme':
+      case 'filme_existente':
+        _fb(fbEl, 'sucesso', 'Filme encontrado! Abrindo...');
+        setTimeout(() => window.location.href = `detalhes-filmes.html?id=${data.filmeId}`, 1100);
+        break;
+      default:
+        _fb(fbEl, 'erro', data.mensagem || 'Título não encontrado.');
+    }
   } catch {
-
-    mostrarFeedback(
-      feedback,
-      'erro',
-      'Erro ao buscar.'
-    );
+    inputEl.disabled = false;
+    _fb(fbEl, 'erro', 'Erro de conexão com o servidor.');
   }
 }
 
-function mostrarResultadoBusca(item) {
-
-  const secao = document.getElementById('resultado-busca');
-  const lista = document.getElementById('resultado-lista');
-
-  if (!secao || !lista) return;
-
-  secao.classList.remove('hidden');
-
-  let href = '#';
-  let tipoTexto = '';
-
-  switch (item.tipo) {
-
-    case 'serie':
-    case 'serie_existente':
-
-      href = `detalhes.html?id=${item.serieId}`;
-      tipoTexto = 'Série';
-
-      break;
-
-    case 'filme':
-    case 'filme_existente':
-
-      href = `detalhes-filmes.html?id=${item.filmeId}`;
-      tipoTexto = 'Filme';
-
-      break;
-
-    default:
-
-      lista.innerHTML = `
-        <div class="resultado-vazio">
-          Nenhum resultado encontrado.
-        </div>
-      `;
-
-      return;
-  }
-
-  lista.innerHTML = `
-    <div class="resultado-card">
-
-      <img
-        src="${item.poster}"
-        alt="${item.titulo}"
-        class="resultado-poster">
-
-      <div class="resultado-info">
-
-        <span class="resultado-tipo">
-          ${tipoTexto}
-        </span>
-
-        <h3>
-          ${item.titulo}
-        </h3>
-
-        <div class="resultado-nota">
-          ⭐ ${item.avaliacao || '-'}
-        </div>
-
-        <p>
-          ${item.mensagem}
-        </p>
-
-        <a
-          href="${href}"
-          class="resultado-btn">
-
-          Ver detalhes
-
-        </a>
-
-      </div>
-
-    </div>
-  `;
-
-  secao.scrollIntoView({
-    behavior: 'smooth'
-  });
-}
-
-function mostrarFeedback(
-  elemento,
-  tipo,
-  mensagem
-) {
-
-  if (!elemento) return;
-
-  elemento.style.display = 'block';
-
-  elemento.className =
-    `feedback-busca feedback-${tipo}`;
-
-  elemento.textContent =
-    mensagem;
-
+function _fb(el, tipo, msg) {
+  if (!el) return;
+  el.textContent  = msg;
+  el.className    = 'feedback-busca feedback-' + tipo;
+  el.style.display = 'block';
   if (tipo !== 'loading') {
-
-    clearTimeout(
-      elemento._timeout
-    );
-
-    elemento._timeout =
-      setTimeout(() => {
-
-        elemento.style.display =
-          'none';
-
-      }, 4000);
+    clearTimeout(el._t);
+    el._t = setTimeout(() => { el.style.display = 'none'; }, 4000);
   }
 }
-

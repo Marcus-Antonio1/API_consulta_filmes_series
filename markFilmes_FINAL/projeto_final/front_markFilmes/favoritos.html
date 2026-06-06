@@ -7,26 +7,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="css/home.css">
-  <title>Filmes - MarkFilmes</title>
+  <title>Favoritos - MarkFilmes</title>
 </head>
 <body>
 <header class="cabecalho">
   <div class="cabecalho__logo"><img src="./img/LogoMarkFilmes.png" alt="MarkFilmes"></div>
-  <div class="select-wrapper">
-    <select data-categorias>
-      <option value="todos">Categorias</option>
-      <option value="comedia">Comédia</option>
-      <option value="acao">Ação</option>
-      <option value="crime">Crime</option>
-      <option value="drama">Drama</option>
-      <option value="aventura">Aventura</option>
-    </select>
-  </div>
   <nav class="cabecalho__opcoes">
     <a href="index.html">Home</a>
-    <a href="filmes.html" class="active">Filmes</a>
+    <a href="filmes.html">Filmes</a>
     <a href="series.html">Séries</a>
-    <a href="favoritos.html">❤ Favoritos <span class="nav-fav-count" id="fav-count"></span></a>
+    <a href="favoritos.html" class="active">❤ Favoritos <span class="nav-fav-count visible" id="fav-count"></span></a>
   </nav>
 </header>
 
@@ -41,20 +31,12 @@
 
 <main>
   <section class="section">
-    <div class="section-header"><h2>🎬 Todos os Filmes</h2></div>
-    <div class="carousel-track-wrapper">
-      <div class="carousel-track infinite" id="carousel-filmes"></div>
-    </div>
-  </section>
-  <section data-name="categoria" class="section hidden">
-    <div class="section-header"><h2 id="cat-titulo">Categoria</h2></div>
-    <div class="carousel-track-wrapper controlled">
-      <div class="carousel-track" id="carousel-categoria"></div>
-    </div>
+    <div class="section-header"><h2>❤ Meus Favoritos</h2></div>
+    <div id="fav-container"></div>
   </section>
 </main>
 <script src="./scripts/favoritos.js" type="module"></script>
 <script src="./scripts/modal.js" type="module"></script>
-<script src="./scripts/filmes.js" type="module"></script>
+<script src="./scripts/pag-favoritos.js" type="module"></script>
 </body>
 </html>
